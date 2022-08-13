@@ -33,7 +33,9 @@ public class GameMechanics {
         printHeader(level, chances);
         board.printMatrix();
 
-        victoryMessage(board, timeElapsed);
+        areYouWinnerOrLoser(board, timeElapsed);
+
+        Board.playAgain ();
 
 
 
@@ -63,24 +65,31 @@ public class GameMechanics {
 
 
 
-    public static void victoryMessage (Board board,int timeElapsed) {
+    public static void areYouWinnerOrLoser(Board board, int timeElapsed) {
         int guessingTries = 0;
 
+        //display information about player victory
         if (chances >=0 && board.allWordsUncovered()) {
             if (level.equals("easy"))
                 guessingTries = 10 - chances;
             else
                 guessingTries = 15 - chances;
+            FilesManagment.printASCIIartFromFile("Winner.txt");
+            System.out.println("You solved the memory game after " + guessingTries + " tries. It too you " + timeElapsed + " seconds." );
+            System.out.println("Enter your name:");
+            String username = scanner.nextLine();
+
+            FilesManagment.saveResults(username, timeElapsed, guessingTries);
+            Board.printHighScores();
         }
-        FilesManagment.printASCIIartFromFile("Winner.txt");
-        System.out.println("You solved the memory game after " + guessingTries + " tries. It too you " + timeElapsed + " seconds." );
-        System.out.println("Enter your name:");
-        String username = scanner.nextLine();
+        //displays information about player defeat
+        else {
+            FilesManagment.printASCIIartFromFile("Loser.txt");
+            System.out.println("You are out of chances. Good luck next time!");
 
-        FilesManagment.saveResults(username, timeElapsed, guessingTries);
-        Board.printHighScores();
+        }
+
     }
-
 
     public static int selectionProcess (Board board) {
         long start = System.currentTimeMillis();
@@ -142,8 +151,6 @@ public class GameMechanics {
         long finish = System.currentTimeMillis();
         return (int) ((finish - start)/1000); // returns time elapsed in seconds
     }
-
-
 
     protected static void selectDifficultyLevel () {
         /*
