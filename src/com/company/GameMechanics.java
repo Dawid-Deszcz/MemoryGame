@@ -35,7 +35,7 @@ public class GameMechanics {
 
         areYouWinnerOrLoser(board, timeElapsed);
 
-        Board.playAgain ();
+        playAgain ();
 
 
 
@@ -52,21 +52,8 @@ public class GameMechanics {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static void areYouWinnerOrLoser(Board board, int timeElapsed) {
-        int guessingTries = 0;
+        int guessingTries;
 
         //display information about player victory
         if (chances >=0 && board.allWordsUncovered()) {
@@ -191,6 +178,22 @@ public class GameMechanics {
             System.out.println("  1 2 3 4");
         else
             System.out.println("  1 2 3 4 5 6 7 8");
+    }
+
+    public static void playAgain () {
+        String playAgain;
+        while (true) {
+            System.out.println("Do you want to play again?");
+            System.out.println("1. Yes");
+            System.out.println("2. No");
+
+            playAgain = scanner.nextLine();
+
+            if (playAgain.equals("1")) {
+                PlayMemoryGame();
+            } else if (playAgain.equals("2"))
+                break;
+        }
     }
 
 
