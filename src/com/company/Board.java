@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Board {
     public int numberOfWords;
@@ -124,5 +122,46 @@ public class Board {
             if(selected[1][i])
                 guessed[1][i] = true;
         }
+    }
+
+    public static void printHighScores () {
+        List<Score> scores = new ArrayList<>();
+
+        //reading the output from the file
+        List<String> records = FilesManagment.readWordsFromFile("Scores.txt");
+
+
+        //saving results in Score object
+        for (String record : records) {
+            String[] splitRecord = record.split(";");
+            scores.add(new Score(splitRecord[0], splitRecord[1], Integer.parseInt(splitRecord[2]), Integer.parseInt(splitRecord[3])));
+
+        }
+
+        // Sorting results from the best to the worst (according to time and number of lives lost)
+        Collections.sort(scores, new Comparator<Score>() {
+            @Override
+            public int compare(Score lhs, Score rhs) {
+                if (lhs.time == rhs.time) {
+                    if(lhs.tries < rhs.tries) {
+                        return -1;
+                    }else if (lhs.time == rhs.tries) {
+                        return 0;
+                    }
+                    return 1;
+                }
+                if (lhs.time<rhs.time) {
+                    return -1;
+                }
+                return 1;
+            }
+        });
+
+        //printing out Scores Table
+        System.out.println("============= HIGH SCORES =============");
+        for (int i = 0; i < scores.size(); i++) {
+            System.out.println((i+1) + ". " + scores.get(i).username + " | " + scores.get(i).date + " | " + scores.get(i).time + " s | | " + scores.get(i).tries + " tries");
+        }
+        System.out.println("=======================================");
     }
 }

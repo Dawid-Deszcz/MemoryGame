@@ -7,29 +7,36 @@ public class GameMechanics {
 
     private static String level = "";
     private static final Scanner scanner = new Scanner(System.in);
-    private static int chances = 3;  // I need to amend it when additional parts of code are added
-    private static int numberOfWords = 4; // I need to amend it when additional parts of code are added
+    private static int chances;
+    private static int numberOfWords;
 
     public static void PlayMemoryGame () {
 
 
+        //transfer elements/words from file to List<String>
+        List<String> words = FilesManagment.readWordsFromFile("Words.txt");
 
-        List<String> words = FilesManagment.readWordsFromFile();
-
+        //create the game board. Board size depends on difficulty level
         GameMechanics.selectDifficultyLevel();
-
-        //preparation of the game board
         Board board = new Board(numberOfWords, words);
 
-        //number of selected words
-        int selectedWords = 0;
-
         /*
-        selectionProcess method performs all tasks connected with selection elements/words by the user.
+        SelectionProcess method performs all tasks connected with selection elements/words by the user.
         Method ends when either all elements are uncovered or all lives are lost.
         Method also measures how long it takes a user to complete this task.
          */
-        long timeElapsed = selectionProcess(board);
+        int timeElapsed = selectionProcess(board);
+
+        /*
+        After game is completed game board with correctly guessed words is printed for the last time
+         */
+        printHeader(level, chances);
+        board.printMatrix();
+
+        victoryMessage(board, timeElapsed);
+
+
+
 
 
 
@@ -56,8 +63,26 @@ public class GameMechanics {
 
 
 
+    public static void victoryMessage (Board board,int timeElapsed) {
+        int guessingTries = 0;
 
-    public static long selectionProcess (Board board) {
+        if (chances >=0 && board.allWordsUncovered()) {
+            if (level.equals("easy"))
+                guessingTries = 10 - chances;
+            else
+                guessingTries = 15 - chances;
+        }
+        FilesManagment.printASCIIartFromFile("Winner.txt");
+        System.out.println("You solved the memory game after " + guessingTries + " tries. It too you " + timeElapsed + " seconds." );
+        System.out.println("Enter your name:");
+        String username = scanner.nextLine();
+
+        FilesManagment.saveResults(username, timeElapsed, guessingTries);
+        Board.printHighScores();
+    }
+
+
+    public static int selectionProcess (Board board) {
         long start = System.currentTimeMillis();
         //game lasts until all lives are lost or all elements/words are uncovered
         String coordinates;
@@ -115,7 +140,7 @@ public class GameMechanics {
             }
         }
         long finish = System.currentTimeMillis();
-        return finish - start;
+        return (int) ((finish - start)/1000); // returns time elapsed in seconds
     }
 
 
@@ -138,10 +163,16 @@ public class GameMechanics {
                 System.out.println("Wrong input!");
         }
 
-
-
-
-
+        //depending on the difficulty level chosen different values are assigned to numberOfWords and chances
+        if (level.equals("1")) {
+            numberOfWords = 4;
+            chances = 10;
+            level = "easy";
+        }else  {
+            numberOfWords = 8;
+            chances = 15;
+            level = "hard";
+        }
     }
 
     private static void printHeader (String level, int chances) {
