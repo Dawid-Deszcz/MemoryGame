@@ -1,8 +1,16 @@
 package com.company;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+
+        String coordinates;
+
+        List<String> words = FilesManagment.readWordsFromFile();
+
+        System.out.println(words);
+
     }
 }
