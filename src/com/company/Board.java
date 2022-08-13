@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -45,6 +46,52 @@ public class Board {
             used[index]=true;
 
         }
+
+        System.out.println(Arrays.deepToString(matrix));
+
+    }
+
+    public boolean allWordsUncovered() {
+        /*
+        Check if all elements/words on the board has been uncovered. If all elements have been uncovered true is returned.
+        If a single element is still covered false is returned.
+         */
+        for (int i = 0; i < numberOfWords; i++) {
+            if (!guessed[0][i] && !selected[0][i])
+                return false;
+            if (!guessed[1][i] && !selected[1][i])
+                return false;
+        }
+        return true;
+    }
+
+    public void printMatrix() {
+        // I could potentially merged it into larger for loop where number of lines will be repeated - that might be a better code
+
+
+        // 1 - print upper part/line of the board
+        System.out.print("A ");
+        for (int i = 0; i < numberOfWords; i++) {
+            // if the field is selected or permanently uncovered then the entire word/element is printed
+            if (selected[0][i] || guessed[0][i])
+                System.out.print(matrix[0][i] + " ");
+            // otherwise, only "x" is displayed
+            else
+                System.out.print("X ");
+        }
+
+        // 2 - print lower part/line of the board
+        System.out.print("\nB ");
+        for (int i = 0; i < numberOfWords; i++) {
+            // if the field is selected or permanently uncovered then the entire word/element is printed
+            if (selected[1][i] || guessed[1][i])
+                System.out.print(matrix[1][i] + " ");
+                // otherwise, only "x" is displayed
+            else
+                System.out.print("X ");
+        }
+
+        System.out.println();
 
     }
 }
