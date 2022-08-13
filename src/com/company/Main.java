@@ -10,7 +10,9 @@ public class Main {
 
         List<String> words = FilesManagment.readWordsFromFile();
 
-        System.out.println(words);
+        GameMechanics.selectDifficultyLevel();
+
+
 
     }
 }
