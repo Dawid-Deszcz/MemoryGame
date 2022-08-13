@@ -24,10 +24,44 @@ public class GameMechanics {
         //number of selected words
         int selectedWords = 0;
 
-        //game lasts until all lives are lost or all elements/words are uncovered
-        long start = System.currentTimeMillis();
+        /*
+        selectionProcess method performs all tasks connected with selection elements/words by the user.
+        Method ends when either all elements are uncovered or all lives are lost.
+        Method also measures how long it takes a user to complete this task.
+         */
+        long timeElapsed = selectionProcess(board);
 
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static long selectionProcess (Board board) {
+        long start = System.currentTimeMillis();
+        //game lasts until all lives are lost or all elements/words are uncovered
         String coordinates;
+        int selectedWords = 0;
         while (chances > 0 && !board.allWordsUncovered()) {
             //print game board on the screen
             System.out.println("—-----------------------------------");
@@ -80,31 +114,9 @@ public class GameMechanics {
                 System.out.println("Wrong input!");
             }
         }
-
-
-
-
-
-
-
-
+        long finish = System.currentTimeMillis();
+        return finish - start;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
