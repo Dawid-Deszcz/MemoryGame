@@ -13,7 +13,6 @@ public class GameMechanics {
     public static void PlayMemoryGame () {
 
 
-        String coordinates;
 
         List<String> words = FilesManagment.readWordsFromFile();
 
@@ -28,14 +27,58 @@ public class GameMechanics {
         //game lasts until all lives are lost or all elements/words are uncovered
         long start = System.currentTimeMillis();
 
+        String coordinates;
         while (chances > 0 && !board.allWordsUncovered()) {
-            //display
+            //print game board on the screen
             System.out.println("—-----------------------------------");
             printHeader(level, chances);
             board.printMatrix();
             System.out.println("—-----------------------------------");
 
+            //coordinates indicating an element/word selected by user
+            System.out.println("Enter your selection. Please use capital letters e.g. A1, B4, A2 etc.");
+            coordinates = scanner.nextLine();
 
+            //if no elements/words are correctly selected then selected items array is restarted
+            // I need to rethink this part
+            if (selectedWords == 0)
+                board.selected = new boolean[2][numberOfWords];
+
+            // checking if user selection was correct
+            if (coordinates.length() == 2) {
+                //checking if first part of the selection sequence (column)  is correct
+                if (coordinates.charAt(0) == 'A' || coordinates.charAt(0) == 'B') {
+                    // translate coordinates entered into array coordinates
+                    int row = coordinates.charAt(0) - 'A';
+                    int col = coordinates.charAt(1) - '1';
+
+                    //checking if second part of the selection sequence (row) is correct
+                    if (col < numberOfWords && col >= 0 ) {
+                        // flagging the selected word
+                        board.selected[row][col] = true;
+                        selectedWords++;
+
+
+                        //if second element/word is flagged, compare if both elements are identical
+                        if(selectedWords == 2){
+
+                            //if both elements are identical, they are flagged as permanently uncovered/guessed
+                            if (board.checkSelectedWords())
+                                board.markGuessedWords();
+
+                            //resetting selectedWords to "0", and hiding elements/words which were not correctly selected
+                            selectedWords = 0;
+                            chances--;
+                        }
+                    }else{
+                        System.out.println("Wrong input!");
+                    }
+                }else{
+                    System.out.println("Wrong input!");
+                }
+            }else{
+                System.out.println("Wrong input!");
+            }
         }
 
 

@@ -94,4 +94,35 @@ public class Board {
         System.out.println();
 
     }
+
+    public boolean checkSelectedWords() {
+        /*
+        Checking if two words flagged by the player are identical. First word is searched in first line.
+        Second word is searched in the second line.
+         */
+
+        String firstWord = "";
+        String secondWord = "";
+
+        for (int i = 0; i < numberOfWords; i++) {
+            if (selected[0][i]) {
+                firstWord = matrix[0][i];
+            }
+            if (selected[1][i]) {
+                secondWord = matrix[1][i];
+            }
+        }
+        return firstWord.equals(secondWord);
+    }
+
+    public void markGuessedWords() {
+        //method flags uncovered/guessed elements which will be displayed on the board game
+        //I could potentially collapse it into double for lopp ?????
+        for (int i = 0; i < numberOfWords; i++) {
+            if(selected[0][i])
+                guessed[0][i] = true;
+            if(selected[1][i])
+                guessed[1][i] = true;
+        }
+    }
 }
