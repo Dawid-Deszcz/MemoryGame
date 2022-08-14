@@ -1,4 +1,4 @@
-##Why do I code?
+# Why do I code?
 
 I code because it is a fun distraction from my day-to-day tasks. For me, coding is like
 making a LEGO_Technic car (finished code performing a specific task) from LEGO bricks (classes,
@@ -34,7 +34,7 @@ that I have to learn,  my OOP skills are nascent, and I need to learn  Git and d
 I achieved so much in a few weeks’ time then I am confident that after Motorola Academy training is finished
 I will be able to provide good quality work to my team. 
 
-##Game description – MemoryGame
+# Game description – MemoryGame
 
 1. Simple guessing and memory game based on the following Wikipedia article https://en.wikipedia.org/wiki/Matching_game
 2. The game is written in Java 17
