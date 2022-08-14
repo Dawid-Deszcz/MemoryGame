@@ -12,43 +12,36 @@ public class GameMechanics {
 
     public static void PlayMemoryGame () {
 
+        //1. Transfer elements/words from file to List<String>
+        List<String> words = FilesManagement.readWordsFromFile("Words.txt");
 
-        //transfer elements/words from file to List<String>
-        List<String> words = FilesManagment.readWordsFromFile("Words.txt");
-
-        //create the game board. Board size depends on difficulty level
+        //2. Create the game board. Board size depends on difficulty level
         GameMechanics.selectDifficultyLevel();
         Board board = new Board(numberOfWords, words);
 
         /*
-        SelectionProcess method performs all tasks connected with selection elements/words by the user.
+        3. SelectionProcess method performs all tasks connected with selection elements/words by the user.
         Method ends when either all elements are uncovered or all lives are lost.
         Method also measures how long it takes a user to complete this task.
          */
         int timeElapsed = selectionProcess(board);
 
-        /*
-        After game is completed game board with correctly guessed words is printed for the last time
-         */
-        printHeader(level, chances);
-        board.printMatrix();
+        //4. After game is completed game board with correctly guessed words is printed for the last time
+        printGameBoard(board);
 
+
+        /*
+        5. The method check the results and if player won or lost and prints appropriate ASCII art
+        to make program more appealing to the player
+         */
+        System.out.println();
         areYouWinnerOrLoser(board, timeElapsed);
 
+        //6. List of 10 best winners is printed out.
+        Board.printHighScores();
+
+        //7. Player is asked whether he/she wants to repeat the game
         playAgain ();
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
@@ -61,17 +54,18 @@ public class GameMechanics {
                 guessingTries = 10 - chances;
             else
                 guessingTries = 15 - chances;
-            FilesManagment.printASCIIartFromFile("Winner.txt");
-            System.out.println("You solved the memory game after " + guessingTries + " tries. It too you " + timeElapsed + " seconds." );
+            FilesManagement.printASCIIartFromFile("Winner.txt");
+            System.out.println();
+            System.out.println("You solved the memory game after " + guessingTries + " tries. It took you " + timeElapsed + " seconds." );
             System.out.println("Enter your name:");
             String username = scanner.nextLine();
 
-            FilesManagment.saveResults(username, timeElapsed, guessingTries);
-            Board.printHighScores();
+            FilesManagement.saveResults(username, timeElapsed, guessingTries);
         }
         //displays information about player defeat
         else {
-            FilesManagment.printASCIIartFromFile("Loser.txt");
+            FilesManagement.printASCIIartFromFile("Loser.txt");
+            System.out.println();
             System.out.println("You are out of chances. Good luck next time!");
 
         }
@@ -85,10 +79,7 @@ public class GameMechanics {
         int selectedWords = 0;
         while (chances > 0 && !board.allWordsUncovered()) {
             //print game board on the screen
-            System.out.println("—-----------------------------------");
-            printHeader(level, chances);
-            board.printMatrix();
-            System.out.println("—-----------------------------------");
+            printGameBoard(board);
 
             //coordinates indicating an element/word selected by user
             System.out.println("Enter your selection. Please use capital letters e.g. A1, B4, A2 etc.");
@@ -183,7 +174,7 @@ public class GameMechanics {
     public static void playAgain () {
         String playAgain;
         while (true) {
-            System.out.println("Do you want to play again?");
+            System.out.println("Do you want to play again? Please type \"1\" or \"2\" to select Yes or No");
             System.out.println("1. Yes");
             System.out.println("2. No");
 
@@ -194,6 +185,16 @@ public class GameMechanics {
             } else if (playAgain.equals("2"))
                 break;
         }
+    }
+
+    private static void printGameBoard (Board board) {
+
+        System.out.println("----------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------");
+        printHeader(level, chances);
+        board.printMatrix();
+        System.out.println("----------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------");
     }
 
 

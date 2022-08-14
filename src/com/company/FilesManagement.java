@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class FilesManagment {
+public class FilesManagement {
 
     private final static String filePathDirectory = "Files/";
 
     public static List<String> readWordsFromFile(String fileName) {
         /*
          Reads database of elements which will be matched by the Memory Game player. The code is optimised for Strings
-         elements, but it could be adjusted to images if needed.
+         elements, but it could be adjusted to add images instead of words if needed.
         */
         try {
             Path path = Paths.get(filePathDirectory + fileName);

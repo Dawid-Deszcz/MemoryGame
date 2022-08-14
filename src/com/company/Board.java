@@ -30,23 +30,15 @@ public class Board {
 
         // 2b - upper part/line of the board
         // drawing elements to the lower level/line of the game
-        int countWhile = 0;
-        int countFor= 0;
         int index;
         for (int i = 0; i < numberOfWords; i++) {
             do {
                 index = random.nextInt(0, numberOfWords);
-                System.out.println(countWhile++);
             }while (used [index]);
-            System.out.println(countFor++ + "Count For");
-
             matrix [1][i] = matrix[0][index];
             used[index]=true;
 
         }
-
-        System.out.println(Arrays.deepToString(matrix));
-
     }
 
     public boolean allWordsUncovered() {
@@ -64,7 +56,7 @@ public class Board {
     }
 
     public void printMatrix() {
-        // I could potentially merged it into larger for loop where number of lines will be repeated - that might be a better code
+        // I could potentially merge it into larger for loop where number of lines will be repeated - that might be a better code
 
 
         // 1 - print upper part/line of the board
@@ -115,7 +107,6 @@ public class Board {
 
     public void markGuessedWords() {
         //method flags uncovered/guessed elements which will be displayed on the board game
-        //I could potentially collapse it into double for lopp ?????
         for (int i = 0; i < numberOfWords; i++) {
             if(selected[0][i])
                 guessed[0][i] = true;
@@ -128,7 +119,7 @@ public class Board {
         List<Score> scores = new ArrayList<>();
 
         //reading the output from the file
-        List<String> records = FilesManagment.readWordsFromFile("Scores.txt");
+        List<String> records = FilesManagement.readWordsFromFile("Scores.txt");
 
 
         //saving results in Score object
@@ -158,11 +149,13 @@ public class Board {
         });
 
         //printing out Scores Table
+        System.out.println();
         System.out.println("============= HIGH SCORES =============");
         for (int i = 0; i < scores.size(); i++) {
-            System.out.println((i+1) + ". " + scores.get(i).username + " | " + scores.get(i).date + " | " + scores.get(i).time + " s | | " + scores.get(i).tries + " tries");
+            System.out.println((i+1) + ". " + scores.get(i).username + " | " + scores.get(i).date + " | " + scores.get(i).time + " s | " + scores.get(i).tries + " tries");
         }
         System.out.println("=======================================");
+        System.out.println();
     }
 
 
