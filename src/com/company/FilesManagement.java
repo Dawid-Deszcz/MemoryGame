@@ -45,7 +45,7 @@ public class FilesManagement {
         }
     }
 
-    public static void saveResults(String username, int time, int tries) {
+    public static void saveResults(String username, int time, int tries, String level) {
         BufferedWriter output;
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -56,7 +56,10 @@ public class FilesManagement {
 
         try {
             //saving information in the file
-            output = new BufferedWriter(new FileWriter(filePathDirectory+"Scores.txt",true));
+            if (level.equals("easy"))
+                output = new BufferedWriter(new FileWriter(filePathDirectory+"ScoresEasy.txt",true));
+            else
+                output = new BufferedWriter(new FileWriter(filePathDirectory+"ScoresHard.txt",true));
             output.write(record);
             output.close();
         }catch (IOException e) {
@@ -64,9 +67,5 @@ public class FilesManagement {
             e.printStackTrace();
         }
     }
-
-
-
-
 
 }

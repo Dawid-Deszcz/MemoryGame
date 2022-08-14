@@ -38,7 +38,10 @@ public class GameMechanics {
         areYouWinnerOrLoser(board, timeElapsed);
 
         //6. List of 10 best winners is printed out.
-        Board.printHighScores();
+        if (level.equals("easy"))
+            Board.printHighScores("ScoresEasy.txt", level);
+        else if (level.equals("hard"))
+            Board.printHighScores("ScoresHard.txt", level);
 
         //7. Player is asked whether he/she wants to repeat the game
         playAgain ();
@@ -60,7 +63,7 @@ public class GameMechanics {
             System.out.println("Enter your name:");
             String username = scanner.nextLine();
 
-            FilesManagement.saveResults(username, timeElapsed, guessingTries);
+            FilesManagement.saveResults(username, timeElapsed, guessingTries, level);
         }
         //displays information about player defeat
         else {
@@ -174,9 +177,9 @@ public class GameMechanics {
     public static void playAgain () {
         String playAgain;
         while (true) {
-            System.out.println("Do you want to play again? Please type \"1\" or \"2\" to select Yes or No");
-            System.out.println("1. Yes");
-            System.out.println("2. No");
+            System.out.println("Would you like to play again? Please type \"1\" or \"2\" to select Yes or No");
+            System.out.println("\"1\" indicates that you selected Yes");
+            System.out.println("\"2\" indicates that you selected No");
 
             playAgain = scanner.nextLine();
 
@@ -196,6 +199,5 @@ public class GameMechanics {
         System.out.println("----------------------------------------------------------------------");
         System.out.println("----------------------------------------------------------------------");
     }
-
 
 }

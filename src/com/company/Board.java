@@ -115,11 +115,11 @@ public class Board {
         }
     }
 
-    public static void printHighScores () {
+    public static void printHighScores (String fileType,String level) {
         List<Score> scores = new ArrayList<>();
 
         //reading the output from the file
-        List<String> records = FilesManagement.readWordsFromFile("Scores.txt");
+        List<String> records = FilesManagement.readWordsFromFile(fileType);
 
 
         //saving results in Score object
@@ -151,12 +151,17 @@ public class Board {
         //printing out Scores Table
         System.out.println();
         System.out.println("============= HIGH SCORES =============");
+        if (level.equals("easy"))
+            System.out.println("============= LEVEL EASY =============");
+        else if (level.equals("hard"))
+            System.out.println("============= LEVEL HARD =============");
+
+
         for (int i = 0; i < scores.size(); i++) {
             System.out.println((i+1) + ". " + scores.get(i).username + " | " + scores.get(i).date + " | " + scores.get(i).time + " s | " + scores.get(i).tries + " tries");
         }
         System.out.println("=======================================");
         System.out.println();
     }
-
 
 }
