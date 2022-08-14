@@ -17,9 +17,20 @@ public class Board {
         guessed = new boolean[2][numberOfWords];
 
         // 1 - upper part/line of the board
+        // array preparation for non-repetitive drawing
+        boolean[] usedFirstLine = new boolean[words.size()];
+        for (int i = 0; i < words.size(); i++) {
+            usedFirstLine[i] = false;
+        }
         // drawing elements from the file to the upper level/line of the board
+        int indexFirstLine;
         for (int i = 0; i < numberOfWords; i++) {
-            matrix[0][i] = words.get(random.nextInt(0, words.size()));
+            do {
+                indexFirstLine = random.nextInt(0, words.size());
+
+            }while (usedFirstLine[indexFirstLine]);
+            matrix[0][i] = words.get(indexFirstLine);
+            usedFirstLine[indexFirstLine] = true;
         }
         // 2a - lower part/line of the board
         // array preparation for non-repetitive drawing

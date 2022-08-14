@@ -1,4 +1,6 @@
-Why do I code?
+
+
+##Why do I code?
 
 I code because it is a fun distraction from my day-to-day tasks. For me, coding is like
 making a LEGO_Technic car (finished code performing a specific task) from LEGO bricks (classes,
