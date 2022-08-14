@@ -2,5 +2,4 @@ Dawid Deszcz;2022-08-13;33;4
 Dawid Deszcz;2022-08-13;141;6
 Dawid Deszcz;2022-08-13;36;4
 Dawid Deszcz;2022-08-13;63;7
-
-
+Dawid Deszcz;2022-08-14;24;5
